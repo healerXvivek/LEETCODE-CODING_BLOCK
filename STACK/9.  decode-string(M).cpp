@@ -31,3 +31,41 @@ public:
         return res;
     }
 };
+
+
+//method 2 using one stack
+
+
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<string> chars;
+        string res="";
+        string num="";
+        for(char c : s) {
+            if(isdigit(c)) {
+                num.push_back(c) ;                              
+            }
+            else if(isalpha(c)) {
+                res.push_back(c);                
+            }
+            else if(c == '[') {
+                chars.push(res);
+                chars.push(num);
+                res = "";
+                num = "";
+            }
+            else if(c == ']') {
+                string tmp = res;
+                int n=stoi(chars.top());
+                for(int i = 1; i < n; i++) {
+                    res += tmp;
+                }
+                chars.pop();
+                res = chars.top() + res;
+                chars.pop();
+            }
+        }
+        return res;
+    }
+};
